@@ -20,7 +20,7 @@
             <p>
                 <span th:text="${product.getQuantity() + ' items left'}"></span>
             </p>
-            <p th:text="${'Created on: ' + product.getCreatedAt()}"></p>
+            <p th:text="${'Created on: ' + product.getLastUpdated()}"></p>
             <a th:href="'/'" class="btn btn-primary p-3 m-2">Back to the homepage</a>
         </div>
 

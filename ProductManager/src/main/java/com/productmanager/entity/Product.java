@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @AllArgsConstructor
@@ -18,24 +19,20 @@ import java.sql.Timestamp;
 
     @Id
     @GeneratedValue
-        private Long id;
-        private String name;
-        private Double price;
-        private Double quantity;
-        private String imageUrl;
+    private Long id;
+    private String name;
+    private Double price;
+    private Double quantity;
+    private String imageUrl;
 
-        private Timestamp createdAt;
+    private Timestamp createdAt;
 
-        private Timestamp lastUpdated;
+    private Timestamp lastUpdated;
 
-        @PrePersist
-        public void beforeSave(){
-            this.lastUpdated = new Timestamp(System.currentTimeMillis());
 
-        }
+    public void beforeSave() {
+        this.lastUpdated = new Timestamp(System.currentTimeMillis());
 
-        public void createdAt(){
-            this.createdAt = new Timestamp(System.currentTimeMillis());
-        }
-
+    }
 }
+

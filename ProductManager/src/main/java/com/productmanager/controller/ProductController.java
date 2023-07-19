@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 public class ProductController {
     private ProductRepository productRepository;
@@ -53,12 +56,13 @@ public class ProductController {
     }
 
 
-    @PutMapping("/product/update/{id}")
-    public String handleUpdateProduct(ProductRequest productRequest, Long id, Model model) {
-        Product productToUpdate = new Product();
+    @RequestMapping(value="/product/update/{id}", method={RequestMethod.PUT,RequestMethod.GET})
+    public String handleUpdateProduct(ProductRequest productRequest,@PathVariable Long id) {
+    Product productToUpdate = new Product();
 
         Product updated = this.productRepository.findProductById(id);
-        model.addAttribute("product", updated);
+
+
 
         productToUpdate.setName(productRequest.getName());
         productToUpdate.setPrice(productRequest.getPrice());
@@ -66,15 +70,38 @@ public class ProductController {
         productToUpdate.setImageUrl(productRequest.getImageUrl());
 
         this.productRepository.save(productToUpdate);
-        return "update-product";
+        return "/update-product";
     }
+
+
+//    @PostMapping("/update-product")
+//    public String handleUpdateProduct(@ModelAttribute Product product) {
+//        // Here, the product object will automatically contain the form data submitted by the user
+//        // You can now update the product details in the database or perform other actions
+//        // For example:
+//        productRepository.save(product);
+//
+//        // Redirect to a success page or any other relevant page after the update
+//        return "/update-product";
+//    }
+
+
+
+
+
+
+
+    @RequestMapping("/update")
+    public String update(){
+        return "redirect:/";
+    }
+
+
 
     @DeleteMapping("/product/delete/{id}")
     @RequestMapping(value="/product/delete/{id}", method={RequestMethod.DELETE,RequestMethod.GET})
     public String handleDeleteProduct(@PathVariable long id) {
        productRepository.deleteById(id);
-
-
         return "redirect:/";
     }
 
